@@ -37,7 +37,7 @@ local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<C-Space>'] = cmp.mapping.complete(),
 })
 
@@ -45,6 +45,25 @@ lsp.setup_nvim_cmp({
     mapping = cmp_mappings
 })
 -- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+local lspconfig = require('lspconfig')
+lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 
+lsp.skip_server_setup({'rust_analyzer'})
 lsp.setup()
+
+local rust_tools = require('rust-tools')
+rust_tools.setup({
+    tools = {
+        runnables = {
+            use_telescope = true,
+        },
+        inlay_hints = {
+            auto = true,
+        }
+    },
+    server = {
+        on_attach = function(_, bufrn)
+            vim.keymap.set("n", "<leader>ca", rust_tools.hover_actions.hover_actions, {buffer = bufrn})
+        end,
+    }
+})
