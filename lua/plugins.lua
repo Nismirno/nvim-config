@@ -1,13 +1,13 @@
 return require('packer').startup(function(use)
     use('wbthomason/packer.nvim')
 
-    use{'junegunn/fzf', run = "fzf#install()"}
+    use { 'junegunn/fzf', run = "fzf#install()" }
     use('junegunn/fzf.vim')
 
-    use{
-        'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} }
+    use {
+        'nvim-telescope/telescope.nvim', requires = { { 'nvim-lua/plenary.nvim' } }
     }
-    use {'morhetz/gruvbox', config = function() vim.cmd.colorscheme("gruvbox") end }
+    use { 'morhetz/gruvbox', config = function() vim.cmd.colorscheme("gruvbox") end }
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
@@ -22,14 +22,14 @@ return require('packer').startup(function(use)
         branch = 'v2.x',
         requires = {
             -- LSP Support
-            {'neovim/nvim-lspconfig'},             -- Required
-            {'williamboman/mason.nvim'},           -- Optional
-            {'williamboman/mason-lspconfig.nvim'}, -- Optional
+            { 'neovim/nvim-lspconfig' },             -- Required
+            { 'williamboman/mason.nvim' },           -- Optional
+            { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
             -- Autocompletion
-            {'hrsh7th/nvim-cmp'},     -- Required
-            {'hrsh7th/cmp-nvim-lsp'}, -- Required
-            {'L3MON4D3/LuaSnip'},     -- Required
+            { 'hrsh7th/nvim-cmp' },     -- Required
+            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+            { 'L3MON4D3/LuaSnip' },     -- Required
         }
     }
     use('simrat39/inlay-hints.nvim')
@@ -42,4 +42,14 @@ return require('packer').startup(function(use)
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
     use('mhartington/formatter.nvim')
+    use({
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!:).
+        run = "make install_jsregexp",
+        requires = { "rafamadriz/friendly-snippets" }
+    })
+    --use("rafamadriz/friendly-snippets")
+    use("saadparwaiz1/cmp_luasnip")
 end)

@@ -40,6 +40,17 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     ['<C-Space>'] = cmp.mapping.complete(),
 })
 
+local luasnip = require("luasnip")
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    }
+})
+
+
 lsp.setup_nvim_cmp({
     mapping = cmp_mappings
 })
